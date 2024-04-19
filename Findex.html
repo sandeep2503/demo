@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+  <p>Click on the button to open the video in fullscreen mode.</p>
+<button onclick="openFullscreen();">Open Video in Fullscreen Mode</button>
+<p><strong>Tip:</strong> Press the "Esc" key to exit full screen.</p>
+
+  
+<video disablePictureInPicture controlslist="nodownload  noplaybackrate "
+poster="https://images.app.goo.gl/THiPaKogyR4b9Rm59" width="100%" id="myvideo">
+  <source id="mp4_src" src="https://vjs.zencdn.net/v/oceans.mp4" type="video/mp4">
+ 
+  Your browser does not support the video tag.
+</video>
+
+<p>Click the buttons to play or pause the video.</p>
+
+<button onclick="playVid()" type="button">Play Video</button>
+<button onclick="pauseVid()" type="button">Pause Video</button> 
+
+<script>
+var x = document.getElementById("myvideo"); 
+
+function playVid() { 
+  x.play(); 
+} 
+
+function pauseVid() { 
+  x.pause(); 
+} 
+</script>
+
+<script>
+/* Get the element you want displayed in fullscreen */ 
+var elem = document.getElementById("myvideo");
+
+/* Function to open fullscreen mode */
+function openFullscreen() {
+  if (elem.requestFullscreen) {
+    elem.requestFullscreen();
+  } else if (elem.webkitRequestFullscreen) { /* Safari */
+    elem.webkitRequestFullscreen();
+  } else if (elem.msRequestFullscreen) { /* IE11 */
+    elem.msRequestFullscreen();
+  }
+}
+
+
+var video = document.getElementById('myvideo');
+var supposedCurrentTime = 0;
+video.addEventListener('timeupdate', function() {
+  if (!video.seeking) {
+		supposedCurrentTime = video.currentTime;
+  }
+});
+// prevent user from seeking
+video.addEventListener('seeking', function() {
+  // guard agains infinite recursion:
+  // user seeks, seeking is fired, currentTime is modified, seeking is fired, current time is modified, ....
+  var delta = video.currentTime - supposedCurrentTime;
+  // delta = Math.abs(delta); // disable seeking previous content if you want
+  if (delta > 0.01) {
+    video.currentTime = supposedCurrentTime;
+  }
+});
+video.addEventListener('ended', function() {
+  // reset state in order to allow for rewind
+	supposedCurrentTime = 0;
+});
+</script>
+</body>
+</html>
