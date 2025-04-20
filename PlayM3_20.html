@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>10 Minute Rotated Progress</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      width: 100%;
+      background-color: black;
+      overflow: hidden;
+      font-family: Arial, sans-serif;
+    }
+
+    iframe {
+      position: absolute;
+      transform: rotate(90deg) translateY(-50vh);
+      transform-origin: bottom left;
+      width: 98vh;
+      height: 97vw;
+      margin-top: -100vw;
+      object-fit: cover;
+      z-index: 1;
+    }
+
+    .progress-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 96vh;
+      height: 18px;
+      transform: rotate(90deg) translateY(-100vh);
+      transform-origin: top left;
+      background-color: rgba(255, 255, 255, 0.2);
+      z-index: 2;
+      display: flex;
+      align-items: center;
+    }
+
+    .progress-bar {
+      height: 100%;
+      width: 0%;
+      background-color: limegreen;
+      color: black;
+      font-size: 14px;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      white-space: nowrap;
+      overflow: hidden;
+      transition: width 1s linear;
+    }
+
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      background-color: rgba(0, 0, 0, 0); /* Fully transparent */
+      z-index: 9999;
+      pointer-events: all;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Rotated iframe -->
+  <iframe src="https://xhamster.desi/videos/tushy-riley-reid-and-paige-owens-massive-anal-gapes-10141582"></iframe>
+
+  <!-- Rotated progress bar -->
+  <div class="progress-container">
+    <div class="progress-bar" id="progressBar">
+      <span id="progressText">Loading 0%. Do not close the page.</span>
+    </div>
+  </div>
+
+  <!-- Overlay that disables interaction -->
+  <div class="overlay" id="blocker"></div>
+
+  <script>
+    const progressBar = document.getElementById('progressBar');
+    const progressText = document.getElementById('progressText');
+    const duration = 795000 ; // 
+    const start = Date.now();
+
+    function updateProgress() {
+      const elapsed = Date.now() - start;
+      const percent = Math.min((elapsed / duration) * 100, 100);
+      progressBar.style.width = percent + '%';
+      progressText.textContent = `${Math.floor(percent)}%.`;
+
+      if (percent < 100) {
+        requestAnimationFrame(updateProgress);
+      } else {
+        progressText.textContent = `Ad Playing Completed. ✅`;
+      }
+    }
+
+    updateProgress();
+
+    // Disable interaction after 15 seconds
+    setTimeout(() => {
+      document.getElementById('blocker').style.display = 'block';
+      const iframe = document.querySelector('iframe');
+      if (iframe) {
+        iframe.style.pointerEvents = 'none'; // Disable iframe clicks
+      }
+      console.log("Page is now unclickable.");
+    }, 15000);
+  </script>
+</body>
+</html>
